@@ -1,0 +1,4 @@
+{
+  "deno.enablePaths": [".cicada", "build.ts"]
+}
+  
