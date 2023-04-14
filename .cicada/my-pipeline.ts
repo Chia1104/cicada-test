@@ -14,6 +14,12 @@ const job = new Job({
         console.log("Hello from js");
       },
     },
+    {
+      name: "test",
+      run: () => {
+        console.log("test");
+      },
+    },
   ],
 });
 
