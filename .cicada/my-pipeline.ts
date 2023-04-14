@@ -1,26 +1,21 @@
 import { Job, Pipeline } from "https://deno.land/x/cicada@v0.1.32/lib.ts";
+import packageJson from "../package.json" assert { type: "json" };
+
+const PACKAGE_MANAGER = packageJson.packageManager?.replace(/@.*/, "")
 
 const job = new Job({
-  name: "My First Job",
-  image: "ubuntu:22.04",
+  name: "web ci",
+  image: "node:18-alpine",
   steps: [
     {
-      name: "Print a message",
-      run: "echo Hello, world!",
+      name: "install dependencies",
+      run: `yarn global add ${packageJson.packageManager} && ${PACKAGE_MANAGER} install`,
     },
     {
-      name: "Run a js function",
-      run: () => {
-        console.log("Hello from js");
-      },
-    },
-    {
-      name: "test",
-      run: () => {
-        console.log("test");
-      },
-    },
-  ],
+      name: "unit test",
+      run: `${PACKAGE_MANAGER} test`,
+    }
+  ]
 });
 
 export default new Pipeline([job]);
